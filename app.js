@@ -14,15 +14,13 @@ function app(people){
     case 'yes':
       searchResults = searchByName(people);
       break;
-    case 'no':
+    case 'no': //search by traits. ~DONE~
       searchResults = searchByEyeColor(people);
-      // TODO: search by traits
       break;
       default:
     app(people); // restart app
       break;
   }
-
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
@@ -83,18 +81,18 @@ function searchByName(people){
   return foundPerson;
 }
 
-//unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
+//finished function to search through an array of people to find matching eye colors.
 function searchByEyeColor(people){
-  let eyeColor = promptFor("What is the person's eye color?");
+  let eyeColorMatch = promptFor("What is the person's eye color?", autoValid);
 
   let foundEyeColor = people.filter(function(eyeMatch) {
-    if(eyeMatch.eyeColor === eyeColor) {
+    if(eyeMatch.eyeColor === eyeColorMatch) {
       return true;
     } else {
       return false;
     }
   })
-  return foundEyeColor;
+  return foundEyeColor
 }
 
 //TODO: add other trait filter functions here.
@@ -142,7 +140,7 @@ function promptFor(question, valid){
   let isValid;
   do{
     response = prompt(question.trim());
-    isValid = valid(response);
+    isValid = valid(response)
   } while(response === ""  ||  isValid === false)
   return response
 }
@@ -166,7 +164,11 @@ function autoValid(input){
 //Unfinished validation function you can use for any of your custom validation callbacks.
 //can be used for things like eye color validation for example.
 function customValidation(input){
-
+  if(input.toLowerCase() == people.eyeColor || input.toLowerCase() == people.name){
+    return true;
+  }else{
+    return false;
+  }
 }
 
 //#endregion
