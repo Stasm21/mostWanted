@@ -4,7 +4,7 @@
 //Menu functions.
 //Used for the overall flow of the application.
 /////////////////////////////////////////////////////////////////
-//#region 
+//#region
 
 // app is the function called to start the entire application
 function app(people){
@@ -15,13 +15,14 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
+      searchResults = searchByEyeColor(people);
       // TODO: search by traits
       break;
       default:
     app(people); // restart app
       break;
   }
-  
+
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
@@ -63,7 +64,7 @@ function mainMenu(person, people){
 //Filter functions.
 //Ideally you will have a function for each trait.
 /////////////////////////////////////////////////////////////////
-//#region 
+//#region
 
 //nearly finished function used to search through an array of people to find matching first and last name and return a SINGLE person object.
 function searchByName(people){
@@ -84,7 +85,16 @@ function searchByName(people){
 
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
 function searchByEyeColor(people){
+  let eyeColor = promptFor("What is the person's eye color?");
 
+  let foundEyeColor = people.filter(function(eyeMatch) {
+    if(eyeMatch.eyeColor === eyeColor) {
+      return true;
+    } else {
+      return false;
+    }
+  })
+  return foundEyeColor;
 }
 
 //TODO: add other trait filter functions here.
@@ -96,7 +106,7 @@ function searchByEyeColor(people){
 //Display functions.
 //Functions for user interface.
 /////////////////////////////////////////////////////////////////
-//#region 
+//#region
 
 // alerts a list of people
 function displayPeople(people){
@@ -121,7 +131,7 @@ function displayPerson(person){
 //Validation functions.
 //Functions to validate user input.
 /////////////////////////////////////////////////////////////////
-//#region 
+//#region
 
 //a function that takes in a question to prompt, and a callback function to validate the user input.
 //response: Will capture the user input.
@@ -131,9 +141,9 @@ function promptFor(question, valid){
   let response;
   let isValid;
   do{
-    response = prompt(question).trim();
+    response = prompt(question.trim());
     isValid = valid(response);
-  } while(response !== ""  ||  isValid === false)
+  } while(response === ""  ||  isValid === false)
   return response
 }
 
@@ -156,7 +166,7 @@ function autoValid(input){
 //Unfinished validation function you can use for any of your custom validation callbacks.
 //can be used for things like eye color validation for example.
 function customValidation(input){
-  
+
 }
 
 //#endregion
