@@ -15,7 +15,7 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no': //search by traits. ~DONE~
-      searchResults = searchByEyeColor(people);
+      searchResults = searchByTrait(people);
       break;
       default:
     app(people); // restart app
@@ -66,8 +66,8 @@ function mainMenu(person, people){
 
 //nearly finished function used to search through an array of people to find matching first and last name and return a SINGLE person object.
 function searchByName(people){
-  let firstName = promptFor("What is the person's first name?", autoValid);
-  let lastName = promptFor("What is the person's last name?", autoValid);
+  let firstName = prompt("What is the person's first name?");
+  let lastName = prompt("What is the person's last name?");
 
   let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.firstName === firstName && potentialMatch.lastName === lastName){
@@ -83,19 +83,75 @@ function searchByName(people){
 
 
 //finished function to search through an array of people to find matching eye colors.
+function searchByTrait(people){
+  let traitChosen;
+  while(true){
+  let traitsearch = prompt("What trait would you like to search this person by?\n(EyeColor, Height, Weight, Gender or Occupation)").toLowerCase();
+    switch (traitsearch) {
+      case 'eye color' :
+        traitChosen = searchByEyeColor(people)
+      break;
+      case 'height' :
+        traitChosen = searchByHeight(people)
+      break;
+      case 'weight' :
+        traitChosen = searchByWeight(people)
+      break;
+      case 'gender' :
+        traitChosen = searchByGender(people)
+      break;
+      case 'occupation' :
+        traitChosen = searchByOccupation(people)
+      break;
+      default: alert('Please enter a valid trait');
+    }
+  }
+}
+//selection menu
+
+//eyecolor
 function searchByEyeColor(people){
-  let eyeColorMatchList = [];
-  let eyeColorMatch = promptFor("What is the person's eye color?", autoValid);
-  let EyeColorSearch = people.filter(function(eyeMatch) {
-    if(eyeMatch.eyeColor === eyeColorMatch) {
-      // prompt((eyeMatch["firstName"] + " " + eyeMatch["lastName"]))
-     eyeColorMatchList.push(eyeMatch["firstName"] + " " + eyeMatch["lastName"]);
+let matchList = []
+let matches;
+let eyeColorMatch = promptFor("What is the person's eye color?");
+let EyeColorSearch = people.filter(function(eyeMatch) {
+  if(eyeMatch.eyeColor === eyeColorMatch) {
+   matchList.push(eyeMatch["firstName"] + " " + eyeMatch["lastName"]);
+  } else {
+    return false;
+  }
+})
+matches = prompt(`${matchList.length} MATCHES FOUND!!!\n${(matchList.join('\n'))}\n\nFound who you're looking for? Then write 'Yes'.
+If still unsure write 'No' to further refine your search`).toLowerCase();
+switch(matches){
+  case 'yes' :
+    app(people);
+  break;
+  case 'no' :
+    searchByTrait()
+  break;
+}
+return matchList;
+}
+
+//gender
+function searchByGender(people){ 
+  let matchList = []
+  let matches;
+  let genderMatch = promptFor("What is the person's gender?");
+  let EyeColorSearch = searchByEyeColor().filter(function(genderFound) {
+    if(genderFound.gender === genderMatch) {
+     matchList.push(genderFound["firstName"] + " " + genderFound["lastName"]);
     } else {
       return false;
     }
   })
-  return prompt(`You have ${eyeColorMatchList.length} matches!!!`);
-}
+  matches = prompt(`${matchList.length} MATCHES FOUND!!!\n${(matchList.join('\n'))}\n\nFound who you're looking for? Then write 'Yes'.\n
+  If still unsure write 'No' to further refine your search`);
+  return matchList;
+  }
+
+
 //TODO: add other trait filter functions here.
 //#endregion
 
@@ -134,7 +190,7 @@ function promptFor(question, valid){
   let isValid;
   do{
     response = prompt(question.trim());
-    isValid = valid(response)
+    isValid = autoValid(response)
   } while(response === ""  ||  isValid === false)
   return response
 }
@@ -157,10 +213,10 @@ function autoValid(input){
 
 //Unfinished validation function you can use for any of your custom validation callbacks.
 //can be used for things like eye color validation for example.
-// function customValidation(people){
-//   let traitFound = people.filter(function (trait) {
-//     if (people.trait === )
-//   })
+// function customValidation(input){
+//   while(true){
+//     let input = 
+//   }
 // }
 
 //#endregion
