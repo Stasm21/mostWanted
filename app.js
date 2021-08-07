@@ -35,7 +35,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
+  let displayOption = promptFor("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
 
   switch(displayOption){
     case "info":
@@ -66,19 +66,18 @@ function mainMenu(person, people){
 
 //nearly finished function used to search through an array of people to find matching first and last name and return a SINGLE person object.
 function searchByName(people){
-  let firstName = prompt("What is the person's first name?");
-  let lastName = prompt("What is the person's last name?");
+  let firstName = promptFor("What is the person's first name?",autoValid);
+  let lastName = promptFor("What is the person's last name?",autoValid);
 
   let foundPerson = people.filter(function(potentialMatch){
-    if(potentialMatch.firstName === firstName && potentialMatch.lastName === lastName){
+    if(potentialMatch.firstName.toLowerCase() === firstName && potentialMatch.lastName.toLowerCase() === lastName){
       return true;
     }
     else{
       return false;
     }
   })
-  // TODO: find the person single person object using the name they entered.
-  return foundPerson;
+    return foundPerson;
 }
 
 
@@ -86,7 +85,7 @@ function searchByName(people){
 function searchByTrait(people){
   let traitChosen;
   while(true){
-  let traitsearch = prompt("What trait would you like to search this person by?\n(EyeColor, Height, Weight, Gender or Occupation)").toLowerCase();
+  let traitsearch = promptFor("What trait would you like to search this person by?\n(EyeColor, Height, Weight, Gender or Occupation)",autoValid);
     switch (traitsearch) {
       case 'eye color' :
         traitChosen = searchByEyeColor(people)
@@ -108,13 +107,15 @@ function searchByTrait(people){
   }
 }
 //selection menu
+let EyeColorSearch;
+let matchList; 
 
 //eyecolor
 function searchByEyeColor(people){
-let matchList = []
+matchList = []
 let matches;
-let eyeColorMatch = promptFor("What is the person's eye color?");
-let EyeColorSearch = people.filter(function(eyeMatch) {
+let eyeColorMatch = promptFor("What is the person's eye color?",autoValid);
+  EyeColorSearch = people.filter(function(eyeMatch) {
   if(eyeMatch.eyeColor === eyeColorMatch) {
    matchList.push(eyeMatch["firstName"] + " " + eyeMatch["lastName"]);
   } else {
@@ -136,12 +137,13 @@ return matchList;
 
 //gender
 function searchByGender(people){ 
-  let matchList = []
+  let matchesFound = [] 
   let matches;
-  let genderMatch = promptFor("What is the person's gender?");
-  let EyeColorSearch = searchByEyeColor().filter(function(genderFound) {
+  let genderMatch = promptFor("What is the person's gender?",autoValid);
+  let genderSearch = matchList.filter(function(genderFound) {
     if(genderFound.gender === genderMatch) {
-     matchList.push(genderFound["firstName"] + " " + genderFound["lastName"]);
+     matchesFound.push(genderFound["firstName"], genderFound["lastName"]);
+     console.log(matchesFound);
     } else {
       return false;
     }
@@ -190,9 +192,9 @@ function promptFor(question, valid){
   let isValid;
   do{
     response = prompt(question.trim());
-    isValid = autoValid(response)
+    isValid = valid(response)
   } while(response === ""  ||  isValid === false)
-  return response
+  return response.toLowerCase();
 }
 
 // helper function/callback to pass into promptFor to validate yes/no answers.
