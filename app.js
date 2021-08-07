@@ -39,10 +39,11 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
+    alert(`Name: ${person[0].firstName} ${person[0].lastName}\nGender: ${person[0].gender}\nDOB: ${person[0].dob}\nEye Color: ${person[0].eyeColor}`);
     break;
     case "family":
-    // TODO: get person's family
+    let spouse = searchForSpouse(people, person);
+    alert(`Spouse: ${spouse[0].firstName} ${spouse[0].lastName}`);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -57,6 +58,14 @@ function mainMenu(person, people){
   }
 }
 
+function searchForSpouse(people, person) {
+  let spouse = people.filter(function (findSpouse) {
+    if ((findSpouse.id === person[0].currentSpouse) === true) {
+      return findSpouse;
+    }
+  })
+  return spouse;
+}
 //#endregion
 
 //Filter functions.
@@ -212,13 +221,6 @@ function yesNo(input){
 function autoValid(input){
   return true; // default validation only
 }
-
 //Unfinished validation function you can use for any of your custom validation callbacks.
 //can be used for things like eye color validation for example.
-// function customValidation(input){
-//   while(true){
-//     let input = 
-//   }
-// }
-
 //#endregion
