@@ -39,7 +39,8 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    alert(`Name: ${person[0].firstName} ${person[0].lastName}\nGender: ${person[0].gender}\nDOB: ${person[0].dob}\nEye Color: ${person[0].eyeColor}`);
+    displayPerson(person[0]);
+    mainMenu(person, people);
     break;
     case "family":
     let spouse = searchForSpouse(people, person);
@@ -91,76 +92,76 @@ function searchByName(people){
 
 
 //finished function to search through an array of people to find matching eye colors.
-function searchByTrait(people){
-  let traitChosen;
-  while(true){
-  let traitsearch = promptFor("What trait would you like to search this person by?\n(EyeColor, Height, Weight, Gender or Occupation)",autoValid);
-    switch (traitsearch) {
-      case 'eye color' :
-        traitChosen = searchByEyeColor(people)
-      break;
-      case 'height' :
-        traitChosen = searchByHeight(people)
-      break;
-      case 'weight' :
-        traitChosen = searchByWeight(people)
-      break;
-      case 'gender' :
-        traitChosen = searchByGender(people)
-      break;
-      case 'occupation' :
-        traitChosen = searchByOccupation(people)
-      break;
-      default: alert('Please enter a valid trait');
-    }
-  }
-}
-//selection menu
-let EyeColorSearch;
-let matchList; 
+// function searchByTrait(people){
+//   let traitChosen;
+//   while(true){
+//   let traitsearch = promptFor("What trait would you like to search this person by?\n(EyeColor, Height, Weight, Gender or Occupation)",autoValid);
+//     switch (traitsearch) {
+//       case 'eye color' :
+//         traitChosen = searchByEyeColor(people)
+//       break;
+//       case 'height' :
+//         traitChosen = searchByHeight(people)
+//       break;
+//       case 'weight' :
+//         traitChosen = searchByWeight(people)
+//       break;
+//       case 'gender' :
+//         traitChosen = searchByGender(people)
+//       break;
+//       case 'occupation' :
+//         traitChosen = searchByOccupation(people)
+//       break;
+//       default: alert('Please enter a valid trait');
+//     }
+//   }
+// }
+// //selection menu
+// let EyeColorSearch;
+// let matchList; 
 
-//eyecolor
-function searchByEyeColor(people){
-matchList = []
-let matches;
-let eyeColorMatch = promptFor("What is the person's eye color?",autoValid);
-  EyeColorSearch = people.filter(function(eyeMatch) {
-  if(eyeMatch.eyeColor === eyeColorMatch) {
-   matchList.push(eyeMatch["firstName"] + " " + eyeMatch["lastName"]);
-  } else {
-    return false;
-  }
-})
-matches = prompt(`${matchList.length} MATCHES FOUND!!!\n${(matchList.join('\n'))}\n\nFound who you're looking for? Then write 'Yes'.
-If still unsure write 'No' to further refine your search`).toLowerCase();
-switch(matches){
-  case 'yes' :
-    app(people);
-  break;
-  case 'no' :
-    searchByTrait()
-  break;
-}
-return matchList;
-}
+// //eyecolor
+// function searchByEyeColor(people){
+// matchList = []
+// let matches;
+// let eyeColorMatch = promptFor("What is the person's eye color?",autoValid);
+//   EyeColorSearch = people.filter(function(eyeMatch) {
+//   if(eyeMatch.eyeColor === eyeColorMatch) {
+//    matchList.push(eyeMatch["firstName"] + " " + eyeMatch["lastName"]);
+//   } else {
+//     return false;
+//   }
+// })
+// matches = prompt(`${matchList.length} MATCHES FOUND!!!\n${(matchList.join('\n'))}\n\nFound who you're looking for? Then write 'Yes'.
+// If still unsure write 'No' to further refine your search`).toLowerCase();
+// switch(matches){
+//   case 'yes' :
+//     app(people);
+//   break;
+//   case 'no' :
+//     searchByTrait()
+//   break;
+// }
+// return matchList;
+// }
 
-//gender
-function searchByGender(people){ 
-  let matchesFound = [] 
-  let matches;
-  let genderMatch = promptFor("What is the person's gender?",autoValid);
-  let genderSearch = matchList.filter(function(genderFound) {
-    if(genderFound.gender === genderMatch) {
-     matchesFound.push(genderFound["firstName"], genderFound["lastName"]);
-     console.log(matchesFound);
-    } else {
-      return false;
-    }
-  })
-  matches = prompt(`${matchList.length} MATCHES FOUND!!!\n${(matchList.join('\n'))}\n\nFound who you're looking for? Then write 'Yes'.\n
-  If still unsure write 'No' to further refine your search`);
-  return matchList;
-  }
+// //gender
+// function searchByGender(people){ 
+//   let matchesFound = [] 
+//   let matches;
+//   let genderMatch = promptFor("What is the person's gender?",autoValid);
+//   let genderSearch = matchList.filter(function(genderFound) {
+//     if(genderFound.gender === genderMatch) {
+//      matchesFound.push(genderFound["firstName"], genderFound["lastName"]);
+//      console.log(matchesFound);
+//     } else {
+//       return false;
+//     }
+//   })
+//   matches = prompt(`${matchList.length} MATCHES FOUND!!!\n${(matchList.join('\n'))}\n\nFound who you're looking for? Then write 'Yes'.\n
+//   If still unsure write 'No' to further refine your search`);
+//   return matchList;
+//   }
 
 
 //TODO: add other trait filter functions here.
@@ -179,11 +180,11 @@ function displayPeople(people){
 }
 
 function displayPerson(person){
-  // print all of the information about a person:
-  // height, weight, age, name, occupation, eye color.
   let personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
-  // TODO: finish getting the rest of the information to display.
+  personInfo += "Last Name: " + person.lastName + "\n" +
+  "Height: " + person.height + '\n' + 'Weight: ' + person.weight + '\n' +
+  'Dob: ' + person.dob + '\n' + 'Occupation: ' + person.occupation + '\n' +
+  'Eye Color: ' + person.eyeColor;
   alert(personInfo);
 }
 //#endregion
