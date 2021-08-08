@@ -43,11 +43,17 @@ function mainMenu(person, people){
     mainMenu(person, people);
     break;
     case "family":
-    let spouse = searchForSpouse(people, person);
-    alert(`Spouse: ${spouse[0].firstName} ${spouse[0].lastName}`);
+
+      let spouse = searchForSpouse(people, person)
+      alert(`Spouse: ${spouse[0].firstName} ${spouse[0].lastName}`);
+      mainMenu(person, people)
+    // TODO: get person's family
     break;
     case "descendants":
     // TODO: get person's descendants
+      let descendants = searchForDescendants(people, person)
+      alert(descendants);
+      mainMenu(person, people)
     break;
     case "restart":
     app(people); // restart
@@ -66,6 +72,22 @@ function searchForSpouse(people, person) {
     }
   })
   return spouse;
+}
+//#endregion
+function searchForDescendants(people, person) {
+  let arr = [];
+  people.filter(function (findDescendents) {
+    if ((findDescendents.id == person[0].parents[0]) === true || (findDescendents.id == person[0].parents[1]) === true) {
+      arr.push(findDescendents)
+    }
+  })
+    if (arr.length === 0) {
+    return 'No descendants found'
+  } else if (arr.length === 1) {
+    return `Descendants:\n${arr[0].firstName} ${arr[0].lastName}`;
+  } else if (arr.length === 2) {
+    return `Descendants:\n${arr[0].firstName} ${arr[0].lastName}\n${arr[1].firstName} ${arr[1].lastName}`;
+  }
 }
 //#endregion
 
@@ -118,7 +140,7 @@ function searchByName(people){
 // }
 // //selection menu
 // let EyeColorSearch;
-// let matchList; 
+// let matchList;
 
 // //eyecolor
 // function searchByEyeColor(people){
@@ -146,8 +168,8 @@ function searchByName(people){
 // }
 
 // //gender
-// function searchByGender(people){ 
-//   let matchesFound = [] 
+// function searchByGender(people){
+//   let matchesFound = []
 //   let matches;
 //   let genderMatch = promptFor("What is the person's gender?",autoValid);
 //   let genderSearch = matchList.filter(function(genderFound) {
