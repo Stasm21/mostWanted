@@ -159,9 +159,7 @@ function searchByName(people){
     return foundPerson;
 }
 
-let traitChosen;
 
-<<<<<<< HEAD
 // finished function to search through an array of people to find matching eye colors.
 function searchByTrait(people){
   let findSpot;
@@ -344,120 +342,9 @@ function searchByOccupation(people) {
 //   If still unsure write 'No' to further refine your search`);
 //   return matchList;
 //   }
-=======
-function searchByTrait(people){
-  if(people.length > 1){
-    let traitsearch = promptFor("What trait would you like to search this person by?\n'eye color', 'height', 'weight', 'gender' or 'occupation'",autoValid);
-      switch (traitsearch) {
-      case 'eye color' :
-      traitChosen = searchByEyeColor(people)
-      break;
-      case 'height' :
-      traitChosen = searchByHeight(people)
-      break;
-      case 'weight' :
-      traitChosen = searchByWeight(people)
-      break;
-      case 'gender' :
-      traitChosen = searchByGender(people)
-      break;
-      case 'occupation' :
-      traitChosen = searchByOccupation(people)
-      break;
-      default:
-      alert('Please enter a valid trait'); 
-      break;
-    }
-  }else{
-    return traitChosen;
-  } 
-}
 
-function searchByEyeColor(people){
-  let eyeColorSearch = promptFor("What is the person's eye color?",autoValid);
-  let eyeColorFiltered = people.filter(function(eyeColorMatch){
-    if (eyeColorMatch.eyeColor.toLowerCase() === eyeColorSearch){
-    return true;
-  }
-  else{
-    return false;
-  }
-  })
-  displayPeople(eyeColorFiltered)
-  if(eyeColorFiltered.length > 1){
-    searchByTrait(eyeColorFiltered)
-  }else {
-    return eyeColorFiltered[0];
-  }
-  
-}
 
-function searchByHeight(people){
-  let heightSearch = promptFor("What is the person's height(in)?",autoValid);
-  let heightFiltered = people.filter(function(heightMatch){
-    if (heightMatch.height === parseInt(heightSearch)){
-    return true;
-  }
-  else{
-    return false;
-  }
-  })
-  displayPeople(heightFiltered);
-  if(heightFiltered.length > 1){
-    searchByTrait(heightFiltered)
-  }else{
-    return heightFiltered[0];
-  }
-}
-
-function searchByWeight(people){
-  let weightSearch = promptFor("What is the person's weight?",autoValid);
-  let weightFiltered = people.filter(function(weightMatch){
-    if (weightMatch.weight === parseInt(weightSearch)){
-    return true;
-  }
-  else{
-    return false;
-  }
-  })
-  displayPeople(weightFiltered);
-  if(people.length > 1){
-    searchByTrait(weightFiltered)
-  }
-}
->>>>>>> 3bf4e72c8483d2bb447c56648e3a7177edec0df7
-
-function searchByGender(people){
-  let genderSearch = promptFor("What is the person's gender?",autoValid);
-  let genderFiltered = people.filter(function(genderMatch){
-    if (genderMatch.gender.toLowerCase() === genderSearch){
-    return true;
-  }
-  else{
-    return false;
-  }
-  })
-  displayPeople(genderFiltered);
-  if(people.length > 1){
-    searchByTrait(genderFiltered)
-  }
-}
-
-function searchByOccupation(people){
-  let OccupationSearch = promptFor("What is the person's eye color?",autoValid);
-  let OccupationFiltered = people.filter(function(OccupationMatch){
-    if (OccupationMatch.Occupation.toLowerCase() === OccupationSearch){
-    return true;
-  }
-  else{
-    return false;
-  }
-  })
-  displayPeople(OccupationFiltered);
-  if(people.length > 1){
-    searchByTrait(OccupationFiltered)
-  }
-}
+//TODO: add other trait filter functions here.
 //#endregion
 
 //Display functions.
@@ -520,4 +407,3 @@ function autoValid(input){
 //Unfinished validation function you can use for any of your custom validation callbacks.
 //can be used for things like eye color validation for example.
 //#endregion
-
