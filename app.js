@@ -160,40 +160,144 @@ function searchByName(people){
 }
 
 
-//finished function to search through an array of people to find matching eye colors.
-// function searchByTrait(people){
-//   let traitChosen;
-//   while(true){
-//   let traitsearch = promptFor("What trait would you like to search this person by?\n(EyeColor, Height, Weight, Gender or Occupation)",autoValid);
-//     switch (traitsearch) {
-//       case 'eye color' :
-//         traitChosen = searchByEyeColor(people)
-//       break;
-//       case 'height' :
-//         traitChosen = searchByHeight(people)
-//       break;
-//       case 'weight' :
-//         traitChosen = searchByWeight(people)
-//       break;
-//       case 'gender' :
-//         traitChosen = searchByGender(people)
-//       break;
-//       case 'occupation' :
-//         traitChosen = searchByOccupation(people)
-//       break;
-//       default: alert('Please enter a valid trait');
-//     }
-//   }
-// }
-// //selection menu
+// finished function to search through an array of people to find matching eye colors.
+function searchByTrait(people){
+  let findSpot;
+  let traitChosen;
+  let traitArray = [' eye color', ' height', ' weight', ' gender', ' occupation'];
+  let joinedTraits = traitArray.join();
+  while(true){
+    let traitsearch = promptFor(`What trait would you like to search this person by?\n${traitArray}`,autoValid).toLowerCase();
+    switch (traitsearch) {
+      case 'eye color' :
+        findSpot = traitArray.indexOf(' eye color');
+        traitArray.splice(findSpot,1)
+        traitChosen = searchByEyeColor(people)
+        console.log(people)
+      break;
+      case 'height' :
+        findSpot = traitArray.indexOf(' height');
+        traitArray.splice(findSpot,1)
+        traitChosen = searchByHeight(people)
+      break;
+      case 'weight' :
+        findSpot = traitArray.indexOf(' height');
+        traitArray.splice(findSpot,1)
+        traitChosen = searchByWeight(people)
+      break;
+      case 'gender' :
+        findSpot = traitArray.indexOf(' height');
+        traitArray.splice(findSpot,1)
+        traitChosen = searchByGender(people)
+      break;
+      case 'occupation' :
+        findSpot = traitArray.indexOf(' height');
+        traitArray.splice(findSpot,1)
+        traitChosen = searchByOccupation(people)
+      break;
+      default: alert('Please enter a valid trait');
+    }
+  }
+}
+//selection menu
 // let EyeColorSearch;
 // let matchList;
 
-// //eyecolor
+
+
+function searchByEyeColor(people) {
+
+  let eyeColorMatch = promptFor("What is the person's eye color?",autoValid);
+  people = people.filter(function (color) {
+      if (eyeColorMatch === color.eyeColor) {
+          return true;
+      }
+          return false;
+  })
+  if(!people.length) {
+    alert(`People with ${eyeColorMatch} eyes:\n0\nStarting Over!`);
+    process.kill();
+
+  } else {
+  alert(`People with ${eyeColorMatch} eyes:\n${displayPeople(people)}\nTo continue to narrow search, choose\nanother trait from the list!`);
+  }
+}
+
+
+function searchByHeight(people) {
+
+  let heightMatch = promptFor("What is the person's height?",autoValid);
+  people = people.filter(function (heights) {
+      if (heightMatch === heights.height) {
+          return true;
+      }
+          return false;
+  })
+  if(people.length) {
+  alert(`People with height of ${heightMatch} inches:\n${displayPeople(people)}\nTo continue to narrow search, choose\nanother trait from the list!`);
+} else if (!people.length) {
+  alert(`People with height of ${heightMatch} inches:\nNone\nStarting Over!`);
+  process.kill();
+  }
+}
+
+function searchByWeight(people) {
+
+  let weightMatch = promptFor("What is the person's weight?",autoValid);
+  people = people.filter(function (color) {
+      if (weightMatch == color.weight) {
+          return true;
+      }
+          return false;
+  })
+  if(!people.length) {
+    alert(`People that weigh ${weightMatch} pounds:\n0\nStarting Over!`)
+    process.kill();
+  } else {
+  alert(`People that weigh ${weightMatch} pounds:\n${displayPeople(people)}\nTo continue to narrow search, choose\nanother trait from the list!`);
+  }
+}
+
+function searchByGender(people) {
+
+  let genderMatch = promptFor("What is the person's gender?",autoValid);
+  people = people.filter(function (color) {
+      if (genderMatch === color.gender) {
+          return true;
+      }
+          return false;
+  })
+  if(!people.length) {
+    alert(`People that are ${genderMatch}:\n0\nStarting Over!`)
+    process.kill();
+  } else {
+  alert(`People that are ${genderMatch}:\n${displayPeople(people)}\nTo continue to narrow search, choose\nanother trait from the list!`);
+  }
+}
+
+
+function searchByOccupation(people) {
+
+  let occupationMatch = promptFor("What is the person's occupation?",autoValid);
+  people = people.filter(function (color) {
+      if (occupationMatch === color.occupation) {
+          return true;
+      }
+          return false;
+  })
+  if(!people.length) {
+    alert(`People with occupation ${occupationMatch}:\n0\nStarting Over!`)
+    process.kill();
+  } else {
+  alert(`People with occupation ${occupationMatch}:\n${displayPeople(people)}\nTo continue to narrow search, choose\nanother trait from the list!`);
+  }
+}
+// function searchByWeight(people)
+//eyecolor
 // function searchByEyeColor(people){
 // matchList = []
 // let matches;
-// let eyeColorMatch = promptFor("What is the person's eye color?",autoValid);
+
 //   EyeColorSearch = people.filter(function(eyeMatch) {
 //   if(eyeMatch.eyeColor === eyeColorMatch) {
 //    matchList.push(eyeMatch["firstName"] + " " + eyeMatch["lastName"]);
@@ -214,7 +318,7 @@ function searchByName(people){
 // return matchList;
 // }
 
-// //gender
+//gender
 // function searchByGender(people){
 //   let matchesFound = []
 //   let matches;
@@ -222,7 +326,6 @@ function searchByName(people){
 //   let genderSearch = matchList.filter(function(genderFound) {
 //     if(genderFound.gender === genderMatch) {
 //      matchesFound.push(genderFound["firstName"], genderFound["lastName"]);
-//      console.log(matchesFound);
 //     } else {
 //       return false;
 //     }
@@ -243,9 +346,10 @@ function searchByName(people){
 
 // alerts a list of people
 function displayPeople(people){
-  alert(people.map(function(person){
+  let peopleChosen = people.map(function(person){
     return person.firstName + " " + person.lastName;
-  }).join("\n"));
+  }).join("\n");
+  return peopleChosen
 }
 
 function displayPerson(person){
