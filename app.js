@@ -30,7 +30,7 @@ function mainMenu(person, people){
 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
-  if(!person){
+  if(!person.length){
     alert("Could not find that individual.");
     return app(people); // restart
   }
@@ -43,9 +43,7 @@ function mainMenu(person, people){
     mainMenu(person, people);
     break;
     case "family":
-
-      let spouse = searchForSpouse(people, person)
-      alert(`Spouse: ${spouse[0].firstName} ${spouse[0].lastName}`);
+      alert(`${findSpouse(people, person)}\n\n${findParents(people, person)}\n\n${findSibling(people, person)}`);
       mainMenu(person, people)
     // TODO: get person's family
     break;
@@ -65,19 +63,40 @@ function mainMenu(person, people){
   }
 }
 
-function searchForSpouse(people, person) {
-  let spouse = people.filter(function (findSpouse) {
-    if ((findSpouse.id === person[0].currentSpouse) === true) {
-      return findSpouse;
+function findSpouse(people, person) {
+  let spouseSearch = people.filter(function (spouse) {
+    if (person[0].currentSpouse === spouse.id) {
+      return true;
     }
+      return false;
   })
-  return spouse;
+    if (spouseSearch.length === 1) {
+      return `Spouse:\n${spouseSearch[0].firstName} ${spouseSearch[0].lastName}`
+    } else {
+      return 'Spouse:\nNone found'
+    }
 }
+
+function findParents(people, person) {
+  let parentSearch = people.filter(function (parent) {
+    if ((parent.id === person[0].parents[0]) || (parent.id === person[0].parents[1])) {
+      return true;
+    }
+      return false;
+  })
+    if (parentSearch.length === 1) {
+      return 'Parents:\n' + parentSearch[0].firstName + ' ' + parentSearch[0].lastName;
+    } else if (parentSearch.length === 2) {
+      return 'Parents:\n' + parentSearch[0].firstName + ' ' + parentSearch[0].lastName + '\n' + parentSearch[1].firstName + ' ' + parentSearch[1].lastName ;
+    } return 'Parents:\nNone found'
+}
+
+
 //#endregion
 function searchForDescendants(people, person) {
   let arr = [];
   people.filter(function (findDescendents) {
-    if ((findDescendents.id == person[0].parents[0]) === true || (findDescendents.id == person[0].parents[1]) === true) {
+    if ((findDescendents.parents[0] == person[0].id) === true || (findDescendents.parents[1] == person[0].id) === true) {
       arr.push(findDescendents)
     }
   })
@@ -89,6 +108,34 @@ function searchForDescendants(people, person) {
     return `Descendants:\n${arr[0].firstName} ${arr[0].lastName}\n${arr[1].firstName} ${arr[1].lastName}`;
   }
 }
+
+function findSibling(people, person) {
+  let searchSibling = people.filter(function (sib) {
+    if (person[0].parents[0] === sib.parents[0] || person[0].parents[1] === sib.parents[0] || person[0].parents[0] === sib.parents[1] || person[0].parents[1] === sib.parents[1]) {
+      return true;
+    }
+      return false;
+  })
+    if (searchSibling.length === 1) {
+        return `Siblings:\n${searchSibling[0].firstName} ${searchSibling[0].lastName}`;
+    } else if (searchSibling.length === 2) {
+        return `Siblings:\n${searchSibling[0].firstName} ${searchSibling[0].lastName}\n${searchSibling[1].firstName} ${searchSibling[1].lastName}`;
+    } else if (searchSibling.length === 3) {
+        return `Siblings:\n${searchSibling[0].firstName} ${searchSibling[0].lastName}\n${searchSibling[1].firstName} ${searchSibling[1].lastName}\n${searchSibling[2].firstName} ${searchSibling[2].lastName}`;
+    } else {
+        return 'Siblings:\nNone Found'
+    }
+}
+
+function validatePerson(people, person) {
+  let ifPersonExists = people.filter(function (someone) {
+    if (someone.firstName === person[0].firstName && someone.lastName === person[0].lastName) {
+      return true;
+    }
+      return false;
+  })
+  return ifPersonExists;
+}
 //#endregion
 
 //Filter functions.
@@ -98,11 +145,11 @@ function searchForDescendants(people, person) {
 
 //nearly finished function used to search through an array of people to find matching first and last name and return a SINGLE person object.
 function searchByName(people){
-  let firstName = promptFor("What is the person's first name?",autoValid);
-  let lastName = promptFor("What is the person's last name?",autoValid);
+  let firstName = promptFor("What is the person's first name?", autoValid);
+  let lastName = promptFor("What is the person's last name?", autoValid);
 
   let foundPerson = people.filter(function(potentialMatch){
-    if(potentialMatch.firstName.toLowerCase() === firstName && potentialMatch.lastName.toLowerCase() === lastName){
+    if(potentialMatch.firstName.toLowerCase() === firstName.toLowerCase() && potentialMatch.lastName.toLowerCase() === lastName.toLowerCase()){
       return true;
     }
     else{
@@ -277,6 +324,7 @@ function yesNo(input){
     return false;
   }
 }
+
 
 // helper function to pass in as default promptFor validation.
 //this will always return true for all inputs.
