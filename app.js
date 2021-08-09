@@ -163,17 +163,18 @@ function searchByName(people){
 // finished function to search through an array of people to find matching eye colors.
 function searchByTrait(people){
   let findSpot;
-  let traitChosen;
+  let traitChosen = people;
   let traitArray = [' eye color', ' height', ' weight', ' gender', ' occupation'];
   let joinedTraits = traitArray.join();
-  while(true){
+  while(traitChosen.length > 1){
+    // if (traitChosen.length === 1) {
+
     let traitsearch = promptFor(`What trait would you like to search this person by?\n${traitArray}`,autoValid).toLowerCase();
     switch (traitsearch) {
       case 'eye color' :
         findSpot = traitArray.indexOf(' eye color');
         traitArray.splice(findSpot,1)
         traitChosen = searchByEyeColor(people)
-        console.log(people)
       break;
       case 'height' :
         findSpot = traitArray.indexOf(' height');
@@ -197,7 +198,9 @@ function searchByTrait(people){
       break;
       default: alert('Please enter a valid trait');
     }
+
   }
+  return traitChosen;
 }
 //selection menu
 // let EyeColorSearch;
@@ -221,6 +224,7 @@ function searchByEyeColor(people) {
   } else {
   alert(`People with ${eyeColorMatch} eyes:\n${displayPeople(people)}\nTo continue to narrow search, choose\nanother trait from the list!`);
   }
+  return people;
 }
 
 
@@ -228,7 +232,7 @@ function searchByHeight(people) {
 
   let heightMatch = promptFor("What is the person's height?",autoValid);
   people = people.filter(function (heights) {
-      if (heightMatch === heights.height) {
+      if (heightMatch == heights.height) {
           return true;
       }
           return false;
@@ -239,6 +243,7 @@ function searchByHeight(people) {
   alert(`People with height of ${heightMatch} inches:\nNone\nStarting Over!`);
   process.kill();
   }
+  return people;
 }
 
 function searchByWeight(people) {
@@ -256,6 +261,7 @@ function searchByWeight(people) {
   } else {
   alert(`People that weigh ${weightMatch} pounds:\n${displayPeople(people)}\nTo continue to narrow search, choose\nanother trait from the list!`);
   }
+  return people;
 }
 
 function searchByGender(people) {
@@ -273,6 +279,7 @@ function searchByGender(people) {
   } else {
   alert(`People that are ${genderMatch}:\n${displayPeople(people)}\nTo continue to narrow search, choose\nanother trait from the list!`);
   }
+  return people;
 }
 
 
@@ -291,6 +298,7 @@ function searchByOccupation(people) {
   } else {
   alert(`People with occupation ${occupationMatch}:\n${displayPeople(people)}\nTo continue to narrow search, choose\nanother trait from the list!`);
   }
+  return people;
 }
 // function searchByWeight(people)
 //eyecolor
@@ -399,3 +407,4 @@ function autoValid(input){
 //Unfinished validation function you can use for any of your custom validation callbacks.
 //can be used for things like eye color validation for example.
 //#endregion
+
